@@ -207,6 +207,22 @@ describe('Singular value decomposition', function () {
         });
     });
 
+    // https://en.wikipedia.org/wiki/Singular_value_decomposition#Example
+    describe('Wikipedia example', function() {
+        var matrix = new Matrix([
+            [1, 0, 0, 0, 2],
+            [0, 0, 3, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 4, 0, 0, 0]
+        ]);
+        var svd = new SVD(matrix);
+
+        it('U and V should be unitary', function () {
+            svd.U.mmul(svd.U.transpose()).should.approximatelyDeep(Matrix.eye(4), 1e-9);
+            svd.V.mmul(svd.V.transpose()).should.approximatelyDeep(Matrix.eye(5), 1e-9);
+        });
+    });
+
     // http://ch.mathworks.com/help/matlab/ref/svd.html
     describe('Matlab example', function () {
         var matrix = new Matrix([
