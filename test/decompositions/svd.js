@@ -206,4 +206,28 @@ describe('Singular value decomposition', function () {
             actual.should.approximatelyDeep(output, 1e-8);
         });
     });
+
+    // http://ch.mathworks.com/help/matlab/ref/svd.html
+    describe('Matlab example', function () {
+        var matrix = new Matrix([
+            [1, 2],
+            [3, 4],
+            [5, 6],
+            [7, 8]
+        ]);
+        var svd = new SVD(matrix);
+        it('singular values', function () {
+            svd.s.should.approximatelyDeep([14.2691, 0.6268], 1e-4);
+        });
+        it('singular vectors', function () {
+            console.log(svd.U.abs());
+            console.log(svd.V);
+            svd.U.abs().should.approximatelyDeep([
+                [0.1525, 0.8226, 0.3945, 0.3800],
+                [0.3499, 0.4214, 0.2428, 0.8007],
+                [0.5474, 0.0201, 0.6979, 0.4614],
+                [0.7448, 0.3812, 0.5462, 0.0407]
+            ], 1e-4);
+        });
+    });
 });
