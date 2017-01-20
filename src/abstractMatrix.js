@@ -1,19 +1,15 @@
-'use strict';
+import LuDecomposition from './dc/lu';
+import {scale} from 'ml-array-utils';
+import * as util from './util';
+import MatrixTransposeView from './views/transpose';
+import MatrixRowView from './views/row';
+import MatrixSubView from './views/sub';
+import MatrixSelectionView from './views/selection';
+import MatrixColumnView from './views/column';
+import MatrixFlipRowView from './views/flipRow';
+import MatrixFlipColumnView from './views/flipColumn';
 
-module.exports = abstractMatrix;
-
-var LuDecomposition = require('./dc/lu');
-var arrayUtils = require('ml-array-utils');
-var util = require('./util');
-var MatrixTransposeView = require('./views/transpose');
-var MatrixRowView = require('./views/row');
-var MatrixSubView = require('./views/sub');
-var MatrixSelectionView = require('./views/selection');
-var MatrixColumnView = require('./views/column');
-var MatrixFlipRowView = require('./views/flipRow');
-var MatrixFlipColumnView = require('./views/flipColumn');
-
-function abstractMatrix(superCtor) {
+export default function AbstractMatrix(superCtor) {
     if (superCtor === undefined) superCtor = Object;
 
     /**
@@ -1211,7 +1207,7 @@ function abstractMatrix(superCtor) {
             }
             var newMatrix = this.constructor.empty(this.rows, this.columns);
             for (var i = 0; i < this.rows; i++) {
-                var scaled = arrayUtils.scale(this.getRow(i), {min, max});
+                var scaled = scale(this.getRow(i), {min, max});
                 newMatrix.setRow(i, scaled);
             }
             return newMatrix;
@@ -1234,7 +1230,7 @@ function abstractMatrix(superCtor) {
             }
             var newMatrix = this.constructor.empty(this.rows, this.columns);
             for (var i = 0; i < this.columns; i++) {
-                var scaled = arrayUtils.scale(this.getColumn(i), {
+                var scaled = scale(this.getColumn(i), {
                     min: min,
                     max: max
                 });
